@@ -68,10 +68,7 @@ uberDataHourMap = function() {
     }, 
     {
         count: 1,
-        points: [{
-          type: "Point",
-          coordinates: this.coordinates
-        }]
+        points: [this.location]
     })
 }
 
