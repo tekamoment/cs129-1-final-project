@@ -14,7 +14,7 @@ and
 are inside "/mongo".
 
 ### Replicate sets:
-Copy and paste the docker-compose.yml found in the Replicaion confi folder on the root project folder
+Copy and paste the docker-compose.yml found in the Replicaion config folder on the root project folder
 
 On the command prompt, navigate to the project folder.
 
@@ -71,7 +71,7 @@ Run the commands included inside `UberDataMapReduce.js`.
 
 ### Setting up sharding:
 
-Copy and paste the docker-compose.yml found in the Replicaion confi folder on the root project folder
+Copy and paste the docker-compose.yml found in the Sharding config folder on the root project folder
 
 Start services: docker-compose up
 
