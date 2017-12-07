@@ -28,7 +28,49 @@ Assuming you ran the container as 'mongo', run the following inside the image's 
 `mongoimport --db ted --collection uberData --type json /data/seeds/uber-raw-data-apr14.json`
 
 ### Replicate sets:
+Copy and paste the docker-compose.yml file on the root project folder
 
+On the cmd promt, navigate to the project folder
+
+Start services
+docker-compose up
+
+Use another cmd to login to "mongosetup"
+docker-compose run mongosetup sh
+
+Login to "mongo1"
+mongo --host mongo1:27017 uber
+
+Setup the configuration for the replica set
+var cfg = {
+	"_id": "uber",
+	"version": 1,
+	"members": [
+		{
+			"_id": 0,
+			"host": "mongo1:27017",
+			"priority": 1
+		},
+		{
+			"_id": 1,
+			"host": "mongo2:27017",
+			"priority": 0
+		},
+		{
+			"_id": 2,
+			"host": "mongo3:27017",
+			"priority": 0
+		}
+	]
+};
+
+Initiate the replica set using the configuration
+rs.initiate(cfg);
+
+After iniiating, set and find the reading preference to the nearest node
+db.getMongo().setReadPref('nearest');
+
+Test replicates
 
 ### Running MapReduce:
 Run the commands included inside `UberDataMapReduce.js`.
