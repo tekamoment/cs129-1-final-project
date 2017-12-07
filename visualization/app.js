@@ -81,7 +81,7 @@ class Root extends Component {
       if (!error) {
         console.log("Loaded uberData.");
         this.setState({uberData: response});
-        this.setSelectedHour();
+        this.setSelectedHour(0);
       } else {
         console.log("Error encountered while loading uberdata.");
         console.log(error);
@@ -103,7 +103,7 @@ class Root extends Component {
     })
   }
 
-  setSelectedHour() {
+  setSelectedHour(hour) {
     console.log("Setting selected hour!");
     if (!this.state.uberData) {
       console.log("NO uber data");
@@ -111,7 +111,7 @@ class Root extends Component {
     }
 
     console.log("Uber data exists!");
-    let selectedHour = this.state.uberData.filter((obj) => parseInt(obj._id.hour) == this.state.hour);
+    let selectedHour = this.state.uberData.filter((obj) => parseInt(obj._id.hour) == hour);
         let hourBoroughs = []
         for (const boroughIndex in selectedHour) {
           let borough = selectedHour[boroughIndex];
@@ -193,8 +193,7 @@ class Root extends Component {
 
   handleChange(event, index, value) {
     this.setState({hour: value});
-    console.log("Hour: " + this.state.hour);
-    this.setSelectedHour();
+    this.setSelectedHour(value);
   }
 
   render() {
