@@ -33,15 +33,19 @@ Copy and paste the docker-compose.yml file on the root project folder
 On the cmd promt, navigate to the project folder
 
 Start services
+
 docker-compose up
 
 Use another cmd to login to "mongosetup"
+
 docker-compose run mongosetup sh
 
 Login to "mongo1"
+
 mongo --host mongo1:27017 uber
 
 Setup the configuration for the replica set
+
 var cfg = {
 	"_id": "uber",
 	"version": 1,
@@ -65,9 +69,11 @@ var cfg = {
 };
 
 Initiate the replica set using the configuration
+
 rs.initiate(cfg);
 
 After iniiating, set and find the reading preference to the nearest node
+
 db.getMongo().setReadPref('nearest');
 
 Test replicates
