@@ -13,9 +13,8 @@ const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
 // Source data CSV
 const DATA_URL = {
-  BUILDINGS: 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/trips/buildings.json',  // eslint-disable-line
   TRIPS: 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/trips/trips.json',  // eslint-disable-line
-  BOROUGHS: 'https://raw.githubusercontent.com/tekamoment/cs129-1-final-project/master/Used%20data/borough_boundaries.geojson'
+  BOROUGHS: 'https://raw.githubusercontent.com/tekamoment/cs129-1-final-project/master/visualization/borough_boundaries.geojson'
 };
 
 class Root extends Component {
@@ -28,16 +27,10 @@ class Root extends Component {
         width: 500,
         height: 500
       },
-      buildings: null,
+      boroughs: null,
       trips: null,
       time: 0
     };
-
-    requestJson(DATA_URL.BUILDINGS, (error, response) => {
-      if (!error) {
-        this.setState({buildings: response});
-      }
-    });
 
     requestJson(DATA_URL.TRIPS, (error, response) => {
       if (!error) {
@@ -47,6 +40,33 @@ class Root extends Component {
 
     requestJson(DATA_URL.BOROUGHS, (error, response) => {
       if (!error) {
+        for (var featureIndex in response.features) {
+          const alpha = 70;
+          let feature = response.features[featureIndex];
+          
+          switch (featureIndex) {
+            case "0":
+              feature.properties.color = [237, 106, 90, alpha];
+              break;
+            case "1":
+              feature.properties.color = [244, 241, 187, alpha];
+              break;
+            case "2":
+              feature.properties.color = [155, 193, 188, alpha];
+              break;
+            case "3":
+              feature.properties.color = [92, 164, 169, alpha];
+              break;
+            case "4":
+              feature.properties.color = [230, 235, 224, alpha];
+              break;
+            default:
+              break;
+          }
+
+        }
+
+        console.log(response);
         this.setState({boroughs: response});
       }
     })
@@ -89,7 +109,7 @@ class Root extends Component {
   }
 
   render() {
-    const {viewport, buildings, trips, time} = this.state;
+    const {viewport, boroughs, trips, time} = this.state;
 
     return (
       <MapGL
@@ -98,8 +118,8 @@ class Root extends Component {
         onViewportChange={this._onViewportChange.bind(this)}
         mapboxApiAccessToken={MAPBOX_TOKEN}>
         <DeckGLOverlay viewport={viewport}
-          buildings={buildings}
           trips={trips}
+          boroughs={boroughs}
           trailLength={180}
           time={time}
           />

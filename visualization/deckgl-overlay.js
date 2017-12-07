@@ -16,40 +16,25 @@ export default class DeckGLOverlay extends Component {
   static get defaultViewport() {
     return {
       longitude: -74,
-      latitude: 40.72,
-      zoom: 13,
-      maxZoom: 16,
+      latitude: 40.70,
+      zoom: 10,
+      maxZoom: 13,
       pitch: 45,
       bearing: 0
     };
   }
 
   render() {
-    const {viewport, buildings, boroughs, trips, trailLength, time} = this.props;
-
-    if (!buildings) {
-      return null;
-    }
+    const {viewport, boroughs, trips, trailLength, time} = this.props;
 
     const layers = [
-      new PolygonLayer({
-        id: 'buildings',
-        data: buildings,
-        extruded: true,
-        wireframe: false,
-        fp64: true,
-        opacity: 0.5,
-        getPolygon: f => f.polygon,
-        getElevation: f => f.height,
-        getFillColor: f => [74, 80, 87],
-        lightSettings: LIGHT_SETTINGS
-      }),
       new GeoJsonLayer({
         id: 'boroughs',
         data: boroughs,
         filled: true,
-        stroked: false,
-        extruded: true
+        stroked: true,
+        extruded: false,
+        getFillColor: f => f.properties.color
       })
     ];
 
