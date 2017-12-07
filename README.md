@@ -28,7 +28,7 @@ Assuming you ran the container as 'mongo', run the following inside the image's 
 `mongoimport --db ted --collection uberData --type json /data/seeds/uber-raw-data-apr14.json`
 
 ### Replicate sets:
-Copy and paste the docker-compose.yml file on the root project folder
+Copy and paste the docker-compose.yml found in the Replicaion confi folder on the root project folder
 
 On the cmd promt, navigate to the project folder
 
@@ -72,3 +72,19 @@ Run the commands included inside `UberDataMapReduce.js`.
 
 
 ### Setting up sharding:
+
+Copy and paste the docker-compose.yml found in the Replicaion confi folder on the root project folder
+
+Start services: docker-compose up
+
+Use another cmd to login to "mongosetup": docker-compose run mongosetup sh
+
+Login to "mongosetup": docker-compose run mongosetup sh
+
+Login to "mongos": mongo mongos1:27017/book
+
+Add nodes to the sharding set: db.adminCommand( { addshard : "node1:27017" } ), db.adminCommand( { addshard : "node2:27017" } )
+
+Enable sharding for a database: db.adminCommand( { enablesharding : "book" } )
+
+Check if sharding is successful: db.adminCommand( { listshards : 1 } );
